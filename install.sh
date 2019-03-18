@@ -34,7 +34,7 @@ UpdateLink(){
     if [[ "`readlink ${target_file}`" = "${source_file}" ]]; then
         echo "${target_file} already set to ${source_file}, taking no action."
         return 0
-    elif [[ -f "$1" ]]; then
+    elif [[ -f "${target_file}" ]]; then
         echo "${target_file} exists, and is not linked correctly to ${source_file}.  Taking no action"
         return 1
     else
