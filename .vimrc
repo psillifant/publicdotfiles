@@ -1,5 +1,4 @@
 "Editing Help:  {{{
-"nnoremap <leader>u :GundoToggle<CR> "Python 2.4. Bastards.
 set spelllang=en_gb
 "set spell
 "}}}
@@ -17,8 +16,6 @@ set expandtab   "Tabs -> Spaces
 
 "Syntax And Colour: {{{
 set background=dark
-"colorscheme solarized
-
 filetype plugin on  "Allows detection of filetype
 filetype indent on  " and loading of indent rules.
 syntax enable       "Syntax highlighting, because colour is awesome!
