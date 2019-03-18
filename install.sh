@@ -38,7 +38,7 @@ UpdateLink(){
         echo "${target_file} exists, and is not linked correctly to ${source_file}.  Taking no action"
         return 1
     else
-        ln -s "${source_file}" "${profile_source}"
+        ln -s "${source_file}" "${target_file}"
     fi
 }
 
