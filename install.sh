@@ -12,7 +12,7 @@ if [[ "`echo $BASH_VERSION | cut -b 1`" -lt "4" ]]; then
     exit 1
 elif [[ "$#" -gt "0" ]]; then
     if [[ "${1,,}" = "update" ]]; then
-        git fetch "$HOME/publicdotfiles"
+        git fetch "$HOME/publicdotfiles" && git pull "$HOME/publicdotfiles"
         if [[ "$?" != "0" ]]; then
             echo "Unable to update git repo at: $HOME/publicdotfiles, despite request to do so.  Exiting..."
             exit 2
