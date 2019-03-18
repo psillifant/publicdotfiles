@@ -3,4 +3,4 @@
 ln -s ~/publicdotfiles/.profile ~/.profile
 ln -s ~/publicdotfiles/.vimrc ~/.vimrc
 
-[[ -f "~/.bash_profile" ]] && echo ". ~/.profile" >> ~/.bash_profile
+[[ -f "$HOME/.bash_profile" ]] && echo ". $HOME/.profile" >> $HOME/.bash_profile
