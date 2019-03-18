@@ -1,4 +1,4 @@
 #! /bin/bash
 git clone https://github.com/psillifant/publicdotfiles ~/
-ln -s ~/.profile ~/publicdotfiles/.profile
-ln -s ~/.vimrc ~/publicdotfiles/.vimrc
+ln -s ~/publicdotfiles/.profile ~/.profile
+ln -s ~/publicdotfiles/.vimrc ~/.vimrc
