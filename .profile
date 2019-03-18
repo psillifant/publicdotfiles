@@ -6,7 +6,7 @@
 
 # Prompt {{{
  if [[ `basename $SHELL` -eq "bash" ]]; then
-  export PS1="\e[0;34m(`echo ${SHELL:5:1}`) [\u@\h] \e[m \e[1;35m \W \e[m   >> "
+  export PS1="\e[0;36m(`echo ${SHELL:5:1}`) [\u@\h] \e[m \e[1;35m \W \e[m   >> "
  else
   export PS1="(`basename $SHELL`) [\$USER@] \$PWD  >> "
  fi
