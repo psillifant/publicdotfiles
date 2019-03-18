@@ -50,6 +50,7 @@ UpdateLink(){
 UpdateLink ".profile"
 UpdateLink ".vimrc"
 
-if [[ ! `grep '. $HOME/.profile' $HOME/.bash_profile` ]]; then
+if [[ ! `grep 'Adding reference to standard .profile' $HOME/.bash_profile` ]]; then
+    echo "# Adding reference to standard .profile" >> $HOME/.bash_profile
     echo ". $HOME/.profile" >> $HOME/.bash_profile
 fi
