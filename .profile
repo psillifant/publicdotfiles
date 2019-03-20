@@ -31,7 +31,7 @@ alias mv='mv -iv'           # Prompts if overwriting, and verbose output.
 alias mkdir="mkdir -v"      # Verbose output.
 [[ "$hosttype" = "mac" ]] && alias which="type -all"     # Mirrors which functionality in Linux.
 alias ls="ls -p"
-
+[[ -f "/usr/bin/vim" ]] && alias vi="vim"
 
 # Final echo to give some visual feedback that the profile has loaded.
 echo "Loaded default bash profile!"
