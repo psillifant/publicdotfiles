@@ -1,5 +1,7 @@
 #! /bin/bash
 
+export dt=`date +"%Y%m%d_%H%M%S"`
+
 UsageStatement(){
     echo "install.sh (update)"
     echo ""
@@ -7,11 +9,8 @@ UsageStatement(){
         update the git repository found at \$HOME/publicdotfiles."
 }
 
-if [[ "`echo $BASH_VERSION | cut -b 1`" -lt "4" ]]; then
-    echo "Must be using Bash 4."
-    exit 1
-elif [[ "$#" -gt "0" ]]; then
-    if [[ "${1,,}" = "update" ]]; then
+if [[ "$#" -gt "0" ]]; then
+    if [[ `echo ${1} | tr "[:upper:]" "[:lower:]"` = "update" ]]; then
         currdir="${pwd}"
         cd "$HOME/publicdotfiles"
         git fetch
@@ -21,6 +20,10 @@ elif [[ "$#" -gt "0" ]]; then
             echo "Unable to update git repo at: $HOME/publicdotfiles, despite request to do so.  Exiting..."
             exit 2
         fi
+    elif [[ `echo ${1} | tr "[:upper:]" "[:lower:]"` = "terminal" ]]; then
+        cp -p ~/Library/Preferences/com.apple.Terminal.plist ~/Library/Preferences/com.apple.Terminal.plist.${dt}
+        cp ~/publicdotfiles/com.apple.Terminal ~/Library/Preferences/com.apple.Terminal.plist
+        defaults read ~/Library/Preferences/com.apple.Terminal.plist
     else
         echo UsageStatement
         exit 3
