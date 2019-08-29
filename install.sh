@@ -27,7 +27,7 @@ AddToProfile(){
     [[ ! -f ${fileloc} ]] && return 1
     
     if [[ ! `grep 'Adding reference to standard .profile' ${fileloc}` ]]; then
-        echo "Adding reference to standard .profile" ${fileloc}
+        echo "  Adding reference to standard .profile in ${fileloc}"
         echo ". $HOME/.profile.k3st" >> ${fileloc}
         addedtoprofile="true"
     fi
@@ -39,6 +39,7 @@ UpdateLink(){
     source_file="${source_dir}/$1"
     target_file="$2/$1"
 
+    echo "Reviewing what to do about: ${source_file}"
 
     if [[ "`readlink ${target_file}`" = "${source_file}" ]]; then
         echo "${target_file} already set to ${source_file}, taking no action."
@@ -53,13 +54,16 @@ UpdateLink(){
 
     if [[ "$1" = ".profile.k3st" ]]; then
         addedtoprofile=""
+        echo "  Checking whether .profile.k3st is sourced correctly."
         for fl in .bashrc .bash_profile .profile
         do
-            echo "Checking $fl"
+            echo "  Checking $fl"
             AddToProfile $fl
             [[ ! -z ${addedtoprofile} ]] && [[ "${addedtoprofile}" = "true" ]] && break
         done
     fi
+
+    echo "";
 }
 
 UpdateLink ".profile.k3st" "$HOME"
