@@ -43,13 +43,16 @@ UpdateLink(){
 
     if [[ "`readlink ${target_file}`" = "${source_file}" ]]; then
         echo "${target_file} already set to ${source_file}, taking no action."
+        echo ""; echo ""
         return 0
     elif [[ -f "${target_file}" ]]; then
         echo "${target_file} exists, and is not linked correctly to ${source_file}.  Taking no action"
+        echo ""; echo ""
         return 1
     else
         echo "${target_file} is not setup correctly.  Linking to ${source_file}"
         ln -s "${source_file}" "${target_file}"
+        echo ""; echo ""
     fi
 
     if [[ "$1" = ".profile.k3st" ]]; then
@@ -63,7 +66,6 @@ UpdateLink(){
         done
     fi
 
-    echo "";
 }
 
 UpdateLink ".profile.k3st" "$HOME"
