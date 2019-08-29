@@ -27,7 +27,7 @@ AddToProfile(){
     [[ ! -f ${fileloc} ]] && return 1
     
     if [[ ! `grep 'Adding reference to standard .profile' ${fileloc}` ]]; then
-        echo "# Adding reference to standard .profile" ${fileloc}
+        echo "Adding reference to standard .profile" ${fileloc}
         echo ". $HOME/.profile.k3st" >> ${fileloc}
         addedtoprofile="true"
     fi
@@ -55,7 +55,7 @@ UpdateLink(){
         addedtoprofile=""
         for fl in .bashrc .bash_profile .profile
         do
-            echo "checking $fl"
+            echo "Checking $fl"
             AddToProfile $fl
             [[ ! -z ${addedtoprofile} ]] && [[ "${addedtoprofile}" = "true" ]] && break
         done
