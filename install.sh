@@ -1,4 +1,5 @@
 #! /bin/bash
+[[ ! -z "${privatedotfiles}" ]] && installdir="$HOME/dotfiles" || installdir="$HOME"
 
 export dt=`date +"%Y%m%d_%H%M%S"`
 
@@ -9,33 +10,34 @@ UsageStatement(){
         update the git repository found at \$HOME/publicdotfiles."
 }
 
-if [[ "$#" -gt "0" ]]; then
-    if [[ `echo ${1} | tr "[:upper:]" "[:lower:]"` = "update" ]]; then
-        currdir="${pwd}"
-        cd "$HOME/publicdotfiles"
-        git fetch
-        git pull
-        cd ${currdir}
-        if [[ "$?" != "0" ]]; then
-            echo "Unable to update git repo at: $HOME/publicdotfiles, despite request to do so.  Exiting..."
-            exit 2
-        fi
-    elif [[ `echo ${1} | tr "[:upper:]" "[:lower:]"` = "terminal" ]]; then
+
+if [[ ! -z "$1" ]]; then
+    if [[ `echo ${1} | tr "[:upper:]" "[:lower:]"` = "terminal" ]]; then
         cp -p ~/Library/Preferences/com.apple.Terminal.plist ~/Library/Preferences/com.apple.Terminal.plist.${dt}
         cp ~/publicdotfiles/com.apple.Terminal ~/Library/Preferences/com.apple.Terminal.plist
         defaults read ~/Library/Preferences/com.apple.Terminal.plist
     else
-        echo UsageStatement
+        UsageStatement
         exit 3
     fi
 fi
 
+AddToProfile(){
+    fileloc="$HOME/$1"
+    [[ ! -f ${fileloc} ]] && return 1
+    
+    if [[ ! `grep 'Adding reference to standard .profile' ${fileloc}` ]]; then
+        echo "# Adding reference to standard .profile" ${fileloc}
+        echo ". $HOME/.profile.k3st" >> ${fileloc}
+        addedtoprofile="true"
+    fi
+}
 
-export source_dir="$HOME/publicdotfiles"
+export source_dir="${installdir}/publicdotfiles"
 
 UpdateLink(){
-    source_file=${source_dir}/$1
-    target_file=$HOME/$1
+    source_file="${source_dir}/$1"
+    target_file="$2/$1"
 
 
     if [[ "`readlink ${target_file}`" = "${source_file}" ]]; then
@@ -48,12 +50,17 @@ UpdateLink(){
         echo "${target_file} is not setup correctly.  Linking to ${source_file}"
         ln -s "${source_file}" "${target_file}"
     fi
+
+    if [[ "$1" = ".profile.k3st" ]]; then
+        addedtoprofile=""
+        for fl in .bashrc .bash_profile .profile
+        do
+            echo "checking $fl"
+            AddToProfile $fl
+            [[ ! -z ${addedtoprofile} ]] && [[ "${addedtoprofile}" = "true" ]] && break
+        done
+    fi
 }
 
-UpdateLink ".profile"
-UpdateLink ".vimrc"
-
-if [[ ! `grep 'Adding reference to standard .profile' $HOME/.bash_profile` ]]; then
-    echo "# Adding reference to standard .profile" >> $HOME/.bash_profile
-    echo ". $HOME/.profile" >> $HOME/.bash_profile
-fi
+UpdateLink ".profile.k3st" "$HOME"
+UpdateLink ".vimrc" "$HOME"
